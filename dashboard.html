@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby - Mazkiply Toto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #00d4ff;
+        }
+
+        .nav-link.active {
+            color: #00d4ff;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #00d4ff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .balance {
+            background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,153,204,0.2));
+            padding: 10px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,212,255,0.3);
+        }
+
+        .balance-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,212,255,0.4);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .welcome-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00d4ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+        }
+
+        .action-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .action-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,153,204,0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            border: 2px solid rgba(0,212,255,0.4);
+        }
+
+        .action-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .action-desc {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .game-image {
+            height: 160px;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+        .game-content {
+            padding: 25px;
+        }
+
+        .game-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .play-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,212,255,0.4);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .welcome-title {
+                font-size: 32px;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-nav">
+                <div class="logo">Mazkiply Toto</div>
+                <nav class="nav-links">
+                    <a href="#" class="nav-link active">Home</a>
+                    <a href="#" class="nav-link">Promo</a>
+                    <a href="#" class="nav-link">Deposit</a>
+                    <a href="#" class="nav-link">Withdraw</a>
+                    <a href="#" class="nav-link">Support</a>
+                </nav>
+            </div>
+            <div class="user-profile">
+                <div class="balance">
+                    <div style="font-size: 12px; opacity: 0.8;">Saldo</div>
+                    <div class="balance-amount">Rp 1.250.000</div>
+                </div>
+                <div class="user-avatar">MZ</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="welcome-section">
+            <h1 class="welcome-title">Selamat Datang Kembali!</h1>
+            <p class="welcome-subtitle">Nikmati pengalaman bermain toto terbaik dengan Mazkiply Toto</p>
+        </section>
+
+        <section class="quick-actions">
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="action-title">Deposit</div>
+                <div class="action-desc">Isi saldo dengan mudah & cepat</div>
+            </div>
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="action-title">Withdraw</div>
+                <div class="action-desc">Tarik kemenangan kapan saja</div>
+            </div>
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <div class="action-title">Riwayat</div>
+                <div class="action-desc">Lihat transaksi & hasil</div>
+            </div>
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <div class="action-title">Promo</div>
+                <div class="action-desc">Bonus & event menarik</div>
+            </div>
+        </section>
+
+        <section class="games-grid">
+            <div class="game-card">
+                <div class="game-image">
+                    <i class="fas fa-dice"></i>
+                </div>
+                <div class="game-content">
+                    <div class="game-title">Toto 4D</div>
+                    <div class="game-stats">
+                        <div class="stat">
+                            <div class="stat-number">10.000x</div>
+                            <div class="stat-label">Payout</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">RTP</div>
+                        </div>
+                    </div>
+                    <button class="play-btn">Main Sekarang</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <div class="game-content">
+                    <div class="game-title">Colok Bebas</div>
+                    <div class="game-stats">
+                        <div class="stat">
+                            <div class="stat-number">65x</div>
+                            <div class="stat-label">Payout</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-label">RTP</div>
+                        </div>
+                    </div>
+                    <button class="play-btn">Main Sekarang</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="game-content">
+                    <div class="game-title">2D / 3D</div>
+                    <div class="game-stats">
+                        <div class="stat">
+                            <div class="stat-number">70x</div>
+                            <div class="stat-label">Payout</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">97%</div>
+                            <div class="stat-label">RTP</div>
+                        </div>
+                    </div>
+                    <button class="play-btn">Main Sekarang</button>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="game-content">
+                    <div class="game-title">Jackpot Toto</div>
+                    <div class="game-stats">
+                        <div class="stat">
+                            <div class="stat-number">1M+</div>
+                            <div class="stat-label">Prize</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">92%</div>
+                            <div class="stat-label">RTP</div>
+                        </div>
+                    </div>
+                    <button class="play-btn">Main Sekarang</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
